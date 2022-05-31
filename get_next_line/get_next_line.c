@@ -5,99 +5,153 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mede-sou <mede-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 12:11:52 by mede-sou          #+#    #+#             */
-/*   Updated: 2022/05/18 17:52:30 by mede-sou         ###   ########.fr       */
+/*   Created: 2022/05/20 10:31:17 by mede-sou          #+#    #+#             */
+/*   Updated: 2022/05/31 10:15:10 by mede-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *get_save(char *dest, int nb_octets)
+char	*ft_malloc(int len)
 {
-	int			i;
-	int			j;
-	static char	*save;
-    
-    i = 0;
-	while (dest[i] != '\0' && nb_octets > 0)
-    {
-       	if (dest[i] == '\n')
-            break ;
-        i++;
-        nb_octets--;
-    }
-    j = 0;
-    while (dest[i + j] != '\0' || nb_octets > 0)
-    {
-        save[j] = dest[i + j];
-        j++;
-        nb_octets--;
-    }
-    save[j + 1] = '\0';
-	printf("save : %s\n", save);
-    return(save);
-    
+	char	*s;
+
+	s = malloc(sizeof(char) * (len + 1));
+	if (s == NULL)
+		return (NULL);
+	s[0] = '\0';
+	return (s);
 }
 
-char *ft_line(char *dest, int nb_octets)
+int	check_sep(char *save, int octets_lus)
 {
-	int			i;
-	int			j;
-	char		*line;
-    
-    i = 0;
-	line = malloc(sizeof(char) * (nb_octets + 2));
-    while (dest[i] != '\0' && nb_octets > 0)
-    {
-        line[i] = dest[i];
-        if (dest[i] == '\n')
-            break ;
-        i++;
-        nb_octets--;
-    }
-    line[i + 1] = '\0';
-	printf("line ds ft: %s\n", line);
-    return(line);
-    
-}
+	int	i;
 
-char    *get_next_line(int fd)
-{
-    char		dest[BUFFER_SIZE];
-    char		*line;
-    static char	*save;
-	int			nb_octets;
-
-	if(fd == -1 || BUFFER_SIZE <= 0 || read(fd, dest, 0) < 0)
-        return(0);
-	nb_octets = read(fd, dest, BUFFER_SIZE);
-	if (save)
+	i = 0;
+	while (save[i])
 	{
-		line = ft_line(save, nb_octets);
-		printf("line si save inexitant : %s\n", line);
+		if (save[i] == '\n')
+			return (1);
+		i++;
+		octets_lus--;
 	}
-	else		
-  		line = ft_line(dest, nb_octets);
-	save = get_save(dest, nb_octets);
-	printf("save cree : %s\n", save);
-	printf("line apres avoir cree save: %s\n", line);
-	return(line);
+	return (0);
 }
 
+char	*ft_line(char *save, int len)
+{
+	int			i;
+	char		*line;
 
-#include "get_next_line.h"
+	i = 0;
+	line = ft_malloc(len);
+	while (save[i] != '\0' && len >= 0)
+	{
+		line[i] = save[i];
+		if (save[i] == '\n')
+		{
+			line[i] = save[i];
+			i++;
+			break ;
+		}
+		i++;
+		len--;
+	}
+	line[i] = '\0';
+	return (line);
+}
 
+char	*ft_save(char **save, int nb_octets)
+{
+	int		i;
+	int		j;
+	char	*temp_save;
+	char	*new_save;
+
+	i = -1;
+	temp_save = *save;
+	while (temp_save[++i] != '\0' && nb_octets > 0)
+	{
+		if (temp_save[i] == '\n')
+			break ;
+		nb_octets--;
+	}
+	new_save = ft_malloc(nb_octets);
+	j = 0;
+	i++;
+	while (--nb_octets + 1 > 0)
+	{
+		new_save[j] = temp_save[i + j];
+		j++;
+	}
+	new_save[j] = '\0';
+	free(temp_save);
+	*save = new_save;
+	return (new_save);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	dest[BUFFER_SIZE + 1];
+	static char	*save;
+	char		*line;
+	int			octets_lus;
+
+	octets_lus = 1;
+	if (fd == -1 || BUFFER_SIZE <= 0 || read(fd, dest, 0) < 0)
+		return (0);
+	if (!save)
+		save = ft_malloc(1);
+	while (check_sep(save, octets_lus) == 0 && octets_lus > 0)
+	{
+		octets_lus = read(fd, dest, BUFFER_SIZE);
+		dest[octets_lus] = '\0';
+		save = ft_temp_join(save, dest);
+	}
+	if (save[0] == '\0')
+	{
+		free(save);
+		save = NULL;
+		return (NULL);
+	}
+	line = ft_line(save, ft_strlen(save));
+	save = ft_save(&save, ft_strlen(save));
+	return (line);
+}
+
+/*
 int main()
 {
    int	fd;
-   char	*line;
-   
+   char *line;
   	
-	fd = open("test.txt", O_RDONLY);
-	line = get_next_line(fd);
+	fd = open("test2.txt", O_RDONLY);
 	if (fd == -1)
    		return (0);
-	printf("%s\n", line);
-	close(fd);
+	line = get_next_line(fd);
+	printf("**********line1 : [%s]\n", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("**********line2 : [%s]\n", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("**********line3 : [%s]\n", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("**********line4 : [%s]\n", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("**********line5 : %s\n", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("**********line6 : %s\n", line);
+	free(line);
+	// line = get_next_line(fd);
+	// printf("**********line7 : %s\n", line);
+	// free(line);
+	// line = get_next_line(fd);
+	// printf("**********line8 : %s\n", line);
+	// free(line);
    return (0);
 }
+*/

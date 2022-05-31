@@ -6,7 +6,7 @@
 /*   By: mede-sou <mede-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:11:37 by mede-sou          #+#    #+#             */
-/*   Updated: 2022/05/18 17:52:37 by mede-sou         ###   ########.fr       */
+/*   Updated: 2022/05/24 11:45:36 by mede-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-char	*get_save(char *dest, int nb_octets);
-char	*line(char *save, int nb_octets);
+char	*ft_line(char *save, int nb_octets);
+char	*ft_save(char **stock, int nb_octets);
 int		ft_strlen(char *s);
-// char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_malloc(int len);
+char	*ft_strjoin(char *s1, char *s2);
+int		check_sep(char *save, int octets_lus);
+char	*ft_temp_join(char *save, char *dest);
 
 #endif
