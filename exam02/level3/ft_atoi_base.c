@@ -15,13 +15,12 @@ int		ft_atoi_base(const char *str, int str_base)
 	}
 	while (str[i])
 	{
-		n = n * str_base;
 		if (str[i] >= '0' && str[i] <= '9')
-			n = n + (str[i] - 48);
+			n = (n * str_base) + (str[i] - 48);
 		else if (str[i] >= 'A' && str[i] <= 'Z')
-			n = n + (str[i] - 'A' - 10);
+			n = (n * str_base) + (str[i] - 'A' - 10);
 		else if (str[i] >= 'a' && str[i] <= 'z')
-			n = n + (str[i] - 'a' - 10);
+			n = (n * str_base) + (str[i] - 'a' - 10);
 		i++;
 	}
 	if (count == 1)

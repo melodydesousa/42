@@ -4,13 +4,13 @@ int is_prime(int n)
 {
 	int i;
 	i = 2;
-	while (i <= n)
+	while (i < n)
 	{
 		if (n % i == 0)
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 void ft_putnbr(int sum)
@@ -48,7 +48,7 @@ int main (int ac, char **av)
 
 	n = ft_atoi(av[1]);
 	sum = 0;
-	i = 1;
+	i = 2;
 	if (n < 0 || ac != 2)
 	{
 		write(1, "0", 1);
@@ -57,7 +57,7 @@ int main (int ac, char **av)
 	}
 	if (ac ==  2)
 	{
-		while (i < n)
+		while (i <= n)
 		{
 			if (is_prime(i) == 1)
 				sum = sum + i;
