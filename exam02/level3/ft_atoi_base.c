@@ -3,10 +3,9 @@ int		ft_atoi_base(const char *str, int str_base)
 {
 	int i;
 	int n;
-	int count;
+	int count = 0;
 
 	i = 0;
-	count = 0;
 	n = 0;
 	if (str[i] == '-')
 	{
@@ -18,9 +17,9 @@ int		ft_atoi_base(const char *str, int str_base)
 		if (str[i] >= '0' && str[i] <= '9')
 			n = (n * str_base) + (str[i] - 48);
 		else if (str[i] >= 'A' && str[i] <= 'Z')
-			n = (n * str_base) + (str[i] - 'A' - 10);
+			n = (n * str_base) + (str[i] - 'A' + 10);
 		else if (str[i] >= 'a' && str[i] <= 'z')
-			n = (n * str_base) + (str[i] - 'a' - 10);
+			n = (n * str_base) + (str[i] - 'a' + 10);
 		i++;
 	}
 	if (count == 1)
@@ -31,5 +30,5 @@ int		ft_atoi_base(const char *str, int str_base)
 #include <stdio.h>
 int main ()
 {
-	printf("%d\n", ft_atoi_base("A", 16));
+	printf("%d\n", ft_atoi_base("-2abc16", 16));
 }

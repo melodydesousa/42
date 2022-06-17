@@ -22,6 +22,6 @@ int	max(int* tab, unsigned int len)
 #include <stdio.h>
 int main ()
 {
-	int tab[5] = {188, 18, 5, 22};
+	int tab[5] = {18, 188, 5, 22};
 	printf("%d\n", max(tab, 5));
 }

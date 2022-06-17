@@ -27,6 +27,6 @@ char	**ft_split(char *str)
 		else
 			i++;
 	}
-	tab[j] = 0;
+	tab[j] = '\0';
 	return (tab);
 }
