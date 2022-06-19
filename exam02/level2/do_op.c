@@ -24,9 +24,8 @@ int main (int argc, char **argv)
 			n = i / j;
 		else if (argv[2][0] == '%')
 			n = i % j;
-		printf("%d\n", n);
+		printf("%d", n);
 	}
-	else 
-		write(1, "\n", 1);
+	write(1, "\n", 1);
 	return (0);
 }
