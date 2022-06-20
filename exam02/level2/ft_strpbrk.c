@@ -31,7 +31,7 @@ int		main(void)
 	s2 = "qw";
 	strpbrk(s, s2);
 	ft_strpbrk(s, s2);
-	//printf("%s\n", strpbrk(s, s2));
-	//printf("%s\n", ft_strpbrk(s, s2));
+	printf("%s\n", strpbrk(s, s2));
+	printf("%s\n", ft_strpbrk(s, s2));
 	return (0);
 }

@@ -16,19 +16,15 @@ size_t	ft_strcspn(const char *s, const char *reject)
 		}
 		i++;
 	}
-	i = 0;
-	while (s[i])
-		i++;
 	return (i);
 }
-//calcule la longueur du segment initial de s 
-//qui ne contient que des caractères absents de reject.  
+//calcule uniquement les caracteres de s qui ne sont pas dans reject 
 #include <string.h>
 #include <stdio.h>
 int	main(void)
 {
-	char s[] = "Hello World";
-	char reject[] = "World";
+	char s[] = "yiHq";
+	char reject[] = "Hello";
 
 	printf("%ld\n", ft_strcspn(s, reject));
 	printf("%ld\n", strcspn(s, reject));

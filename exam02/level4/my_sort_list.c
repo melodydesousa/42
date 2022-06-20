@@ -19,80 +19,69 @@
 // }
 #include "ft_list.h"
 #include <stdio.h>
-#include <string.h>
 
 t_list	*sort_list(t_list* lst, int (*cmp)(int, int))
 {
-	int int_temp;
-	t_list *tmp;
-
-	tmp = lst;
-	while (lst->next)
+	t_list *temp_list;
+	int temp;
+	temp_list = lst;
+	if (lst == NULL)
+		return (NULL);
+	while (lst->next != NULL)
 	{
 		if (cmp(lst->data, lst->next->data) == 0)
 		{
-			int_temp = lst->data;
+			temp = lst->data;
 			lst->data = lst->next->data;
-			lst->next->data = int_temp;
-			lst = tmp;
+			lst->next->data = temp;
+			lst = temp_list;
 		}
 		else
 			lst = lst->next;
 	}
-	lst = tmp;
+	lst = temp_list;
 	return (lst);
 }
 
 
-//----------------------------------------------------------------
-// #include <stdio.h>
-// #include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stddef.h>
 
-// int ascending(int a, int b)
-// {
-// 	return (a >= b);
-// }
+int ascending(int a, int b)
+{
+	return (a <= b);
+}
 
-// int	main(void)
-// {
-// 	t_list *c = malloc(sizeof(t_list));
-// 	c->next = 0;
-// 	c->data = 14;
+int	main(void)
+{
+	t_list *c = malloc(sizeof(t_list));
+	c->next = 0;
+	c->data = 45;
 
-// 	t_list *b = malloc(sizeof(t_list));
-// 	b->next = c;
-// 	b->data = 1;
+	t_list *b = malloc(sizeof(t_list));
+	b->next = c;
+	b->data = 73;
 
+	t_list *a = malloc(sizeof(t_list));
+	a->next = b;
+	a->data = 108;
 
-// 	t_list d;
-// 	d.data = 50;
-// 	d.next = NULL;
+	t_list *cur = a;
+	while (cur)
+	{
+		printf("%d, ", cur->data);
+		cur = cur->next;
+	}
+	printf("\n");
 
-// 	t_list e;
-// 	e.data = 90;
-// 	e.next = NULL;
+	cur = sort_list(a, ascending);
 
-// 	d.next = &e;
-// 	t_list *a = &d;
-
-// 	printf("data dans d = %d\n", d->next);
-// 	printf("data dans a = %d\n", a->data);
-
-// 	t_list *cur = a;
-// 	while (cur)
-// 	{
-// 		printf("%d, ", cur->data);
-// 		cur = cur->next;
-// 	}
-// 	printf("\n");
-
-// 	cur = sort_list(&d, ascending);
-
-// 	// cur = a;
-// 	while (cur)
-// 	{
-// 		printf("%d, ", cur->data);
-// 		cur = cur->next;
-// 	}
-// 	printf("\n");
-// }
+	// cur = a;
+	while (cur)
+	{
+		printf("%d, ", cur->data);
+		cur = cur->next;
+	}
+	printf("\n");
+}
