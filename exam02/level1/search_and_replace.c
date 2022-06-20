@@ -13,7 +13,7 @@ int main (int argc, char **argv)
 		j++;
 	while (argv[3][k])
 		k++;
-	if (argc == 4 && j == 0 && k == 0)
+	if (argc == 4 && j == 1 && k == 1)
 	{
 		while (argv[1][i])
 		{
