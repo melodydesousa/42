@@ -11,13 +11,13 @@ int main (int arc, char **arv)
 		while (arv[1][i])
 		{
 			if (arv[1][i] >= 'a' && arv[1][i] <= 'm')
-				arv[1][i] = arv[1][i] - 'a' + 13;
+				arv[1][i] = arv[1][i] + 13;
 			else if (arv[1][i] >= 'n' && arv[1][i] <= 'z')
-				arv[1][i] = arv[1][i] - 'a' - 13;
+				arv[1][i] = arv[1][i] - 13;
 			else if (arv[1][i] >= 'A' && arv[1][i] <= 'M')
-				arv[1][i] = arv[1][i] - 'A' + 13;
+				arv[1][i] = arv[1][i] + 13;
 			else if (arv[1][i] >= 'N' && arv[1][i] <= 'Z')
-				arv[1][i] = arv[1][i] - 'A' - 13;
+				arv[1][i] = arv[1][i] - 13;
 			write(1, &arv[1][i], 1);
 			i++;
 		}
