@@ -6,7 +6,7 @@
 /*   By: mede-sou <mede-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 11:40:51 by mede-sou          #+#    #+#             */
-/*   Updated: 2022/07/13 11:30:28 by mede-sou         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:58:36 by mede-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,11 @@ void	ft_make_a_av(t_list **a, char **av);
 // t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 //Calculs
-void	init_push_swap(t_list **a);
+void	init_push_swap(t_list **a, t_list **b);
 void	push_swap_2(t_list *a);
 void	push_swap_3(t_list **a);
-void	push_swap_4(t_list **a);
+void	push_swap_4(t_list **a, t_list **b);
+void	push_swap_5(t_list **a, t_list **b);
 
 int		find_max(t_list *a, int size);
 int		find_min(t_list *a, int size);
