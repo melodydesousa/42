@@ -20,6 +20,7 @@ int	exec(int tmp_fd, int i, char **av, char **env)
 {
 	av[i] = NULL;
 	dup2(tmp_fd, STDIN_FILENO);
+	close(tmp_fd);
 	execve(av[0], av, env);
 	ft_putstr_fd(STDERR_FILENO, "error: cannot execute ");
 	ft_putstr_fd(STDERR_FILENO, av[0]);
@@ -67,7 +68,7 @@ int main(int ac, char **av, char **env)
 				close(tmp_fd);
 				while (1)
 				{
-					if (waitpid(-1, NULL, 2) == -1)
+					if (waitpid(-1, NULL, WUNTRACED) == -1)
 						break ;
 				}
 				tmp_fd = dup(STDIN_FILENO);
