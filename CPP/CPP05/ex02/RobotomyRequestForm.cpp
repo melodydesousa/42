@@ -1,8 +1,7 @@
 #include "RobotomyRequestForm.hpp"
-// #include "Bureaucrat.hpp"
 
 RobotomyRequestForm::RobotomyRequestForm(std::string target) : Form(72, 5, "no name") {
-	this->_is_signed = false;
+	this->_target = target;
 	std::cout << "Default RobotomyRequestForm constructor called\n";
 }
 
@@ -13,20 +12,22 @@ RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const &to_copy) : F
 
 RobotomyRequestForm& RobotomyRequestForm::operator=(RobotomyRequestForm const &cpy) {
 	std::cout << "RobotomyRequestForm operator = called\n";
-	if (this != &cpy)
-		this->_is_signed = cpy.getIfSigned();
+	(void) cpy;
 	return *this;
 }
 
-int RobotomyRequestForm::getIfSigned(void) const {
-	return (this->_is_signed);
+void RobotomyRequestForm::action_form(Bureaucrat const & executor) {
+	this->execute(executor);
+	std::cout << "* Drill sounds *\n";
+	std::srand(std::time(0));
+	for (int i = 0; i < 100; i++) {
+		if (std::rand() % 2 == 0)
+			std::cout << this->_target << " has been Robotimized!/n";
+		else
+			std::cout << this->_target << "'s robotimization failed!/n";
+	}
 }
 
 RobotomyRequestForm::~RobotomyRequestForm(void) {
 	std::cout << "Destructor RobotomyRequestForm called\n";
-}
-
-std::ostream& operator<<(std::ostream &out, RobotomyRequestForm const &p) {
-	out << "\n";
-	return out;
 }

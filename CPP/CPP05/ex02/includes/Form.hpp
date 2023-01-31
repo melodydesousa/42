@@ -20,7 +20,8 @@ public:
 	int getIfSigned(void) const;
 
 	void beSigned(Bureaucrat& bureaucrat);
-	void execute(Bureaucrat& bureaucrat);
+	void execute(Bureaucrat const & executor) const;
+	virtual void action_form(Bureaucrat const & executor);
 
 	class GradeTooHighException : public std::exception
 	{
@@ -37,6 +38,24 @@ public:
 			virtual const char* what() const throw()
 			{
 				return ("Grade is too low\n");
+			}
+	};
+
+	class FormNotSigned : public std::exception
+	{
+		public:
+			virtual const char* what() const throw()
+			{
+				return ("Form isn't signed: cannot execute\n");
+			}
+	};
+
+	class FileCantOPen : public std::exception
+	{
+		public:
+			virtual const char* what() const throw()
+			{
+				return ("Error while opening file\n");
 			}
 	};
 

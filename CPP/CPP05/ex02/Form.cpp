@@ -49,10 +49,13 @@ void Form::beSigned(Bureaucrat& bureaucrat) {
 		throw GradeTooLowException();
 }
 
-void Form::execute(Bureaucrat const & bureaucrat) {
+void Form::execute(Bureaucrat const & bureaucrat) const {
+	if (this->_is_signed == false)
+		throw FormNotSigned();
+	if (bureaucrat.getGrade() > this->_grade_exec)
+		throw GradeTooLowException();
 	return;
 }
-
 
 std::ostream& operator<<(std::ostream &out, Form const &form) {
 	out << form.getName() << " requires a grade of <= " << form.getGradeSign() << " to be signed and a grade of <= " << form.getGradeExec() << " to be executed\n";

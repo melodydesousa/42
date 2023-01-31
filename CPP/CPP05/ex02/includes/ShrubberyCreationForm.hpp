@@ -3,6 +3,8 @@
 
 # include <iostream>
 # include <stdexcept>
+# include <fstream>
+# include "Form.hpp"
 
 class Bureaucrat;
 
@@ -10,36 +12,16 @@ class	ShrubberyCreationForm : public Form
 {
 
 public:
-	ShrubberyCreationForm(int gradeSign, int gradeExec, std::string name);
+	ShrubberyCreationForm(std::string target);
 	ShrubberyCreationForm(ShrubberyCreationForm const &copy);
 	~ShrubberyCreationForm(void);
 	ShrubberyCreationForm& operator=(ShrubberyCreationForm const &cpy);
 
-	int getIfSigned(void) const;
-
-	class GradeTooHighException : public std::exception
-	{
-		public:
-			virtual const char* what() const throw()
-			{
-				return ("Grade is too high\n");
-			}
-	};
-
-	class GradeTooLowException : public std::exception
-	{
-		public:
-			virtual const char* what() const throw()
-			{
-				return ("Grade is too low\n");
-			}
-	};
+	void action_form(Bureaucrat const & executor);
 
 private:
+	std::string _target;
 
 };
-
-std::ostream& operator<<(std::ostream &out, ShrubberyCreationForm const &p);
-
 
 #endif

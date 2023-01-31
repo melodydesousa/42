@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <stdexcept>
+# include "Form.hpp"
 
 class Bureaucrat;
 
@@ -10,36 +11,16 @@ class	PresidentialPardonForm : public Form
 {
 
 public:
-	PresidentialPardonForm(int gradeSign, int gradeExec, std::string name);
+	PresidentialPardonForm(std::string target);
 	PresidentialPardonForm(PresidentialPardonForm const &copy);
 	~PresidentialPardonForm(void);
 	PresidentialPardonForm& operator=(PresidentialPardonForm const &cpy);
-
-	int getIfSigned(void) const;
-
-	class GradeTooHighException : public std::exception
-	{
-		public:
-			virtual const char* what() const throw()
-			{
-				return ("Grade is too high\n");
-			}
-	};
-
-	class GradeTooLowException : public std::exception
-	{
-		public:
-			virtual const char* what() const throw()
-			{
-				return ("Grade is too low\n");
-			}
-	};
+	
+	void action_form(Bureaucrat const & executor);
 
 private:
+	std::string _target;
 	
 };
-
-std::ostream& operator<<(std::ostream &out, PresidentialPardonForm const &p);
-
 
 #endif

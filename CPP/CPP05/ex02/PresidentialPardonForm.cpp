@@ -1,7 +1,7 @@
 #include "PresidentialPardonForm.hpp"
-// #include "Bureaucrat.hpp"
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target) : Form(25, 5, "no name") {
+	this->_target = target;
 	std::cout << "Default PresidentialPardonForm constructor called\n";
 }
 
@@ -12,21 +12,15 @@ PresidentialPardonForm::PresidentialPardonForm(PresidentialPardonForm const &to_
 
 PresidentialPardonForm& PresidentialPardonForm::operator=(PresidentialPardonForm const &cpy) {
 	std::cout << "PresidentialPardonForm operator = called\n";
-	if (this != &cpy)
-		this->_is_signed = cpy.getIfSigned();
+	(void) cpy;
 	return *this;
-}
-
-int PresidentialPardonForm::getIfSigned(void) const {
-	return (this->_is_signed);
 }
 
 PresidentialPardonForm::~PresidentialPardonForm(void) {
 	std::cout << "Destructor PresidentialPardonForm called\n";
 }
 
-
-std::ostream& operator<<(std::ostream &out, PresidentialPardonForm const &p) {
-	out << "\n";
-	return out;
+void PresidentialPardonForm::action_form(Bureaucrat const & executor) {
+	this->execute(executor);
+	std::cout << this->_target << " has been forgiven by Zaphod Beeblebrox\n";
 }

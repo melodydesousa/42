@@ -4,7 +4,7 @@
 
 int main()
 {
-	Form form(1, 15, "Fofo");
+	/*Form form(1, 15, "Fofo");
 	Bureaucrat test("Bubu", 20);
 	std::cout << BLINK_YELLOW "************* Grade = 20 -> CAN SIGN **********\n" RESET;
 	try
@@ -43,6 +43,7 @@ int main()
 	{
 		std::cout << e.what();
 	}
+	*/
 
 	return 0;
 }

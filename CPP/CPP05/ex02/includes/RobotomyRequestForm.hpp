@@ -3,6 +3,9 @@
 
 # include <iostream>
 # include <stdexcept>
+# include "Form.hpp"
+# include <stdlib.h>
+# include <time.h> 
 
 class Bureaucrat;
 
@@ -10,36 +13,16 @@ class	RobotomyRequestForm : public Form
 {
 
 public:
-	RobotomyRequestForm(int gradeSign, int gradeExec, std::string name);
+	RobotomyRequestForm(std::string target);
 	RobotomyRequestForm(RobotomyRequestForm const &copy);
 	~RobotomyRequestForm(void);
 	RobotomyRequestForm& operator=(RobotomyRequestForm const &cpy);
 
-	int getIfSigned(void) const;
-
-	class GradeTooHighException : public std::exception
-	{
-		public:
-			virtual const char* what() const throw()
-			{
-				return ("Grade is too high\n");
-			}
-	};
-
-	class GradeTooLowException : public std::exception
-	{
-		public:
-			virtual const char* what() const throw()
-			{
-				return ("Grade is too low\n");
-			}
-	};
+	void action_form(Bureaucrat const & executor);
 
 private:
+	std::string _target;
 
 };
-
-std::ostream& operator<<(std::ostream &out, RobotomyRequestForm const &p);
-
 
 #endif
