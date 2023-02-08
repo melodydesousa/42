@@ -13,7 +13,7 @@ class Array {
 		~Array(void);
 
 		Array& operator=(Array const &assign);
-		T& operator[](size_t index);		
+		T& operator[](size_t index) const;		
 
 		size_t size(void) const;
 		
@@ -27,21 +27,16 @@ class Array {
 		};
 
 	private:
-		T* _array;
 		size_t	_size;
-
-
+		T* _array;
 };
 
 template< typename T>
-Array<T>::Array(void) : _size(0) {
-	_array = new T[0];
-}
+Array<T>::Array(void) : _size(0), _array(new T[0]) {}
 
 template< typename T>
-Array<T>::Array(unsigned int n) : _size(n) {
-	_array = new T[n];
-	for (size_t i = 0; i < n; i++) {
+Array<T>::Array(unsigned int n) : _size(n), _array(new T[n]) {
+	for (size_t i = 0; i < _size; i++) {
 		_array[i] = T();
 	}
 }
@@ -53,19 +48,21 @@ Array<T>::Array(Array const &cpy) {
 
 template< typename T>
 Array<T>::~Array(void){
-	// delete [];
-	return;
+	delete [] _array;
 }
 
 template< typename T>
 Array<T>& Array<T>::operator=(Array<T> const &assign) {
 	_size = assign._size;
 	_array = new T[_size];
+	for (size_t i = 0; i < _size; i++) {
+		_array[i] = assign._array[i];
+	}
 	return (*this);
 }
 
 template< typename T>
-T& Array<T>::operator[](size_t index) {
+T& Array<T>::operator[](size_t index) const {
 	if (index >= _size || index < 0)
 		throw InvalidIndex ();
 	return (_array[index]);
@@ -77,10 +74,10 @@ size_t Array<T>::size(void) const{
 }
 
 template< typename T>
-std::ostream & operator<<(std::ostream & out, Array <T> const &ref)
+std::ostream & operator<<(std::ostream & out, Array<T> const &ref)
 {
 	for (size_t i = 0; i < ref.size(); i++) {
-		std::cout << ref._array[i] << std::endl;
+		out << ref._array[i];
 	}
 	return out;
 }
