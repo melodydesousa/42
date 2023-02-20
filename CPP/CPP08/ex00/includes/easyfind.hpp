@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <vector>
+# include <deque>
 # include <map>
 # include <list>
 # include <algorithm>
@@ -20,12 +21,12 @@ class NoMatch : public std::exception
 template< typename T>
 int easyfind(T &container, int i)
 {
-   int match;
-   typename T::const_iterator it = find(container.begin(), container.end(), i);
-    if (it == container.end())
-        throw NoMatch ();
-    match = *it;
-    return (match);
+	int match;
+	typename T::const_iterator it = find(container.begin(), container.end(), i);
+	if (it == container.end())
+		throw NoMatch ();
+	match = *it;
+	return (match);
 }
 
 #endif

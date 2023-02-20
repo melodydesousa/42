@@ -27,6 +27,19 @@ int main() {
 	{
 		std::cout << e.what();
 	}
+
+	std::cout << YELLOW "Deque test" RESET << std::endl;
+	std::deque<int> deque1(10, 42);
+	// deque1.push_front(4);
+	try 
+	{
+		int match = easyfind(deque1, 4);
+		std::cout << match << std::endl;
+	}
+	catch (std::exception &e)
+	{
+		std::cout << e.what();
+	}
 	
 	return 0;
 }

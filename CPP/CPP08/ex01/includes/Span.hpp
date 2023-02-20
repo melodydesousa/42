@@ -4,18 +4,21 @@
 # include <iostream>
 # include <vector>
 # include <map>
+# include <deque>
 # include <list>
 # include <algorithm>
 # include <stdexcept>
 
 class Span {
-	Span();
+public:
+	Span(void);
 	Span(unsigned int N);
 	Span(Span const &cpy);
 	Span& operator=(Span const &assign);
-	~Span();
+	~Span(void);
 
 	void addNumber(int nb);
+	void addRange(std::vector<int>::iterator first, std::vector<int>::iterator last);
 
 	class TooManyNumbers : public std::exception {
 		public:
@@ -32,11 +35,12 @@ class Span {
 			}
 	};
 
-	Span& shortestSpan();
-	Span& longestSpan();
+	int shortestSpan();
+	int longestSpan();
 
-	private:
-		unsigned int _N;
+private:
+	unsigned int		_N;
+	std::vector<int> 	_vec;
 
 };
 
