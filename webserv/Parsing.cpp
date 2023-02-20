@@ -96,6 +96,7 @@ void init_conf_file(std::string file)
         Elem.push_back(line.c_str());
     }
     check_config_file(Elem);
+file_tmp.close();
 }
 
 int main(int ac, char **av)
