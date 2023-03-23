@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include <list>
@@ -21,14 +22,11 @@ public:
     std::string checkDate(std::string date);
     void readInputFile(std::ifstream &file);
     void createMapDB();
-    void matchDB();
-    void printMap();
+    void matchDB(std::string date, double rate_f);
     BitcoinExchange &operator=(BitcoinExchange const &assign);
 
 private:
-    std::map<std::string, float> _data;
-    std::map<std::string, float> _result;
-    std::map<std::string, float> _db;
+    std::map<std::string, double> _db;
 
     bool error;
 

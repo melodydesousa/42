@@ -26,59 +26,6 @@ std::string BitcoinExchange::checkDate(std::string date)
     return (date);
 }
 
-void BitcoinExchange::printMap()
-{
-    std::map<std::string, float>::reverse_iterator it = _result.rbegin();
-    std::map<std::string, float>::reverse_iterator it_data = _data.rbegin();
-    while (it != _result.rend() && it_data != _data.rend())
-    {
-        std::cout << it->first << " ";
-        if (it->second > 0)
-            std::cout << "=> " << it_data->second << " = " << it->second;
-        std::cout << std::endl;
-        it++;
-        it_data++;
-    }
-}
-
-void BitcoinExchange::matchDB()
-{
-    std::map<std::string, float>::iterator it = _data.begin();
-    std::map<std::string, float>::iterator it_db = _db.begin();
-
-    while (it != _data.end())
-    {
-        if (it->second < 0)
-            _result.insert(std::pair <std::string, float>(it->first, it->second));
-        while (it_db != _db.end())
-        {
-            if (it->first == it_db->first && it->second > 0)
-            {
-                _result.insert(std::pair <std::string, float>(it->first, it->second * it_db->second));
-                break;
-            }
-            it_db++;
-        }
-        // pas trouvé de match, passer à la date inférieure la plus proche
-        if (it_db == _db.end())
-        // {
-        //     it_db = _db.begin();
-        //     while (it_db != _db.end())
-        //     {
-        //         if (it->first == it_db->first)
-        //         {
-        //             _result.insert(std::pair <std::string, float>(it->first, it->second * it_db->second));
-        //             break;
-        //         }
-        //         it_db++;
-        //     }
-        // }
-        it_db = _db.begin();
-        it++;
-    }
-}
-
-
 void BitcoinExchange::createMapDB()
 {
     std::ifstream file("data.csv");
@@ -89,8 +36,8 @@ void BitcoinExchange::createMapDB()
         {
             std::string date = line.substr(0, line.find(','));
             std::string rate = line.substr(line.find(',') + 1);
-            float rate_f = std::atof(rate.c_str());
-            _db.insert(std::pair<std::string, float>(date, rate_f));
+            double rate_f = std::atof(rate.c_str());
+            _db.insert(std::pair<std::string, double>(date, rate_f));
         }
     }
     else
@@ -100,50 +47,81 @@ void BitcoinExchange::createMapDB()
     }
 }
 
-
 void BitcoinExchange::readInputFile(std::ifstream &file)
 {
     std::string line;
+    double rate_f;
+    std::string date;
+    std::string rate;
+
     std::getline(file, line);
     if (line != "date | value")
     {
         std::cerr << "Error: Invalid header" << std::endl;
         exit(1);
     }
+    createMapDB();
     while (std::getline(file, line))
     {
-        std::string date = line.substr(0, line.find(' '));
-        date = checkDate(date);
-        // std::string sep = line.substr(line.find(' ') + 1, 2);
-        // if (sep != "| ")
-        // {
-        //     std::cerr << "Error: Invalid separator" << std::endl;
-        //     // exit(1);
-        // }
-        std::string rate = line.substr(line.find(' ') + 3);;
-        float rate_f;
-        if (error == false)
+        date = checkDate(line.substr(0, line.find(' ')));
+        size_t pos = line.find(' ');
+        std::string sep = line.substr(pos + 1, 2);
+        if (sep != "| " && pos != std::string::npos)
+            std::cerr << "Error: Invalid format" << std::endl;
+        rate = line.substr(line.find(' ') + 3);;
+        rate_f = std::atof(rate.c_str());
+        if (error == true || rate_f < 0 || rate_f > 1000)
         {
-            rate_f = std::atof(rate.c_str());
             if (rate_f < 0)
-            {
                 date = "Error: not a positive number";
-                rate_f = -1;
-            }
             else if (rate_f > 1000)
-            {
                 date = "Error: number too large";
-                rate_f = -1;
+            rate_f = -1;
+        }
+        matchDB(date, rate_f);
+    }
+}
+
+void BitcoinExchange::matchDB(std::string date, double rate_f)
+{
+    std::map<std::string, double>::iterator it_db = _db.begin();
+    std::map<std::string, double>::iterator it_tmp;
+    bool print = false;
+
+    if (rate_f < 0)
+    {
+        std::cout << date << std::endl;
+        return ;
+    }
+    while (it_db != _db.end())
+    {
+        if (date == it_db->first && rate_f > 0)
+        {
+            print = true;
+            break;
+        }
+        it_db++;
+    }
+    if (it_db == _db.end())
+    {
+        it_tmp = _db.upper_bound(date);
+        for (it_db = _db.begin(); it_db != _db.end(); ++it_db)
+        {
+            if (it_tmp->first == it_db->first)
+            {
+                std::cout << " tmp = " << it_tmp->first << std::endl;
+                print = true;
+                break;
             }
         }
-        else
-            rate_f = -1;
-        _data.insert(std::pair<std::string, float>(date, rate_f));
-       
     }
-    createMapDB();
-    matchDB();
-    printMap();
-    
-
+    if (print == true)
+    {
+        std::ostringstream oss;
+        std::ostringstream oss2;
+        oss << (rate_f * it_db->second);
+        oss2 << rate_f;
+        std::cout << date + " => " + oss2.str() + " = " + oss.str() << std::endl;
+    }
 }
+
