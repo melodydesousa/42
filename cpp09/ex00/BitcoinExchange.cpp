@@ -16,10 +16,12 @@ std::string BitcoinExchange::checkDate(std::string date)
     if(year.size() != 4 || year_int > 2023)
         error = true;
     std::string month = date.substr(5, 2);
-    if(month < "01" || month > "12")
+    if (month < "01" || month > "12")
         error = true;
     std::string day = date.substr(8, 2);
-    if(day < "01" || day > "31")
+    if (day < "01" || day > "31" && month != "02")
+        error = true;
+    else if (day < "01" || day > "29" && month == "02")
         error = true;
     if (error == true)
         date = "Error: bad input => " + date;
@@ -105,7 +107,8 @@ void BitcoinExchange::matchDB(std::string date, double rate_f)
     if (it_db == _db.end())
     {
         it_tmp = _db.lower_bound(date);
-        it_tmp--;
+        if (it_tmp != _db.begin())
+            it_tmp--;
         for (it_db = _db.begin(); it_db != _db.end(); ++it_db)
         {
             if (it_tmp->first == it_db->first)
@@ -114,6 +117,11 @@ void BitcoinExchange::matchDB(std::string date, double rate_f)
                 break;
             }
         }
+        // if (it_tmp == _db.end())
+        // {
+        //     std::cout << "Error: couldn't find a lower matching date" << std::endl;
+        //     return ;
+        // } 
     }
     if (print == true)
     {
