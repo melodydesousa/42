@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  email    String  @unique
+  nickname String  @unique
+  avatar   String?
+  hash     String
+  isonline Boolean @default(true)
+  hashRT   String?
+  twoFA    Boolean @default(false)
+  S2FA     String?
+  tempS2FA String?
+
+  // Will be game stats
+  won         Int?
+  lost        Int?
+  xp          Int        @default(0)
+  achievement String[]
+  bookmarks   Bookmark[]
+  games       Games[]
+  friends     Friends[]
+  messages    Messages[]
+  chatmember  Chat[]     @relation("ChatMembers")
+  adminOf     Chat[]     @relation("ChatAdmin")
+  blockList   Int[]
+  @@map("users")
+}
+
+model Bookmark {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  title       String
+  description String?
+  link        String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("bookmarks")
+}
+
+
+model Games {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  opponent   String
+  outcome    String
+  score      String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("games")
+}
+
+model Friends {
+  id        Int      @id @default(autoincrement())
+  friendId  Int
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  nickname String?
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)//user qui ajoute le friend
+
+  @@map("friends")
+}
+
+model Chat {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+
+  name     String     @unique
+  // https://www.prisma.io/docs/concepts/components/prisma-schema/relations/many-to-many-relations#conventions-for-relation-tables-in-implicit-m-n-relations
+  members  User[]     @relation("ChatMembers")
+  admin    User       @relation("ChatAdmin", fields: [channelOwnerId], references: [id], onDelete: Cascade)
+  channelOwnerId  Int
+  adminId  Int[]
+  privacy  String
+  mdpHash  String?
+  banlist  Int[]
+  muteList Int[]
+  isMP     Boolean @default(false)
+  messages Messages[] @relation("ChatMessages")
+
+  @@map("chats")
+}
+
+model Messages {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  content   String   @db.VarChar(255)
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  senderId  Int
+  chatId    Int
+  chat      Chat     @relation("ChatMessages", fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
