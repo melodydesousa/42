@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* > * {
+    font-family: "Poppins", cursive;
+}
+
+:root{
+    --color-dark: #14125c;
+    --color-light: #F3F3F2;
+}
+
+.board {
+    background-color: white;
+}
+
+.scrollable-container {
+    height: 400px; /* Set the desired height for the scrollable-container container */
+    overflow: auto;
+  }
+
+.bloc-game .text {
+    color: var(--color-dark);
+    text-align: center;
+}
+
+.bloc-game {
+    background-color: var(--color-light);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}

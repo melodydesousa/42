@@ -1,0 +1,145 @@
+.game {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20%;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+
+
+}
+
+
+.button-game{
+    background-color: #262773;
+    color: rgb(255, 255, 255);
+
+
+    padding: 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    top: 10%;
+    left: 30%;
+}
+
+.button-game2{
+    background-color: #262773;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    top: 10%;
+    left: 40%;
+}
+
+.button-wrapper{
+    position: center;
+
+}
+
+.button-game3{
+    background-color: #262773;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+}
+
+.button-game4{
+    background-color: #262773;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    position: fixed;
+    top: 10%;
+    left: 60%;
+}
+
+.settings2{
+
+    background-color: white;
+	padding: 10px 10px;
+	border-radius: 10px;
+	gap: 5px;
+	position: fixed;
+	margin: 10px;
+}
+
+#canvas{
+        padding: 0;
+        margin: auto;
+        display: block;
+        width: 60%;
+        height: 70%;
+        position: fixed;
+        top: 20%;
+        bottom: 0%;
+        left: 0;
+        right: 0;
+        background-position: center;
+        background-size: cover;
+    }
+
+
+
+
+    /* background-image: url("./asset/quadricolor.jpg"); */
+   /* background-image: url("./asset/planet_space.jpeg");*/
+    /*background-image: url("./asset/ocean_night.jpg");*/
+    /*background-image: url("./asset/forest.jpeg");*/
+    /*background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBWEIdNqpeAjr8BQTuQM8hoWkz_ECvaCUi33fPbah1o-PpBNkQhgN24p-w9W6LwTIbXWs&usqp=CAU");*/
+
+
+/*
+    client1 invite client 2 en cliquant sur un bouton invite dans le chat
+    le back envoit server.emit.client2('invitGame')
+
+    /**************************
+    Client side
+    client.on.client2('invitGame')
+    {
+        <button>
+        accepte tu la partie ?
+        <button>
+        if oui
+        {
+            client.emit('accepted')
+        }
+
+    }
+
+
+    /*************************
+
+    server.emit.client1('start-game);
+    server.emit.client2('start-game);
+
+
+     /**************************
+    Client side
+    client.on.client1('start-game')
+    {
+        ma partie a moi que je sais quoi faire
+
+    }
+
+
+
+*/

@@ -1,0 +1,144 @@
+.user-friends {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    gap: 10px;
+    padding: 10px;
+}
+
+.icon-wrapper {
+    /* display: flex; */
+    align-items: center;
+    margin-left: auto;
+}
+
+.h2 {
+    font-size: 2rem;
+    padding: 15px 15px 10px 15px;
+}
+
+.img-avatar {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.user-info-container {
+    display: flex;
+    justify-items: space-between;
+    align-items: center;
+}
+
+.cercle-grey {
+    width: 10px;
+    background-color: grey;
+    height: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.cercle-green {
+    width: 10px;
+    background-color: green;
+    height: 10px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.text-ingame {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #918f8f;
+}
+
+
+/* background: green; */
+
+
+.friend {
+    width: 80%;
+}
+
+.input-wrapper {
+    /* background-color: white; */
+    width: 100%;
+    border-radius: 15px;
+    height: 2.5rem;
+    padding: 0 15px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    border: none;
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    background-color: transparent;
+    border: none;
+    height: 100%;
+    width: 100%;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.a {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #000000;
+	cursor: pointer;
+    opacity: 0.5;
+}
+
+.user-search {
+    color: #14125c;
+}
+
+.user-popup {
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 5px;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+}
+
+.p {
+    color: #14125c;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-add {
+	background-color: transparent;
+	color: rgb(67, 67, 67);
+	padding: 3px;
+	border-radius: 15px;
+	border: none;
+	cursor: pointer;
+}
+
+.btn-add:hover {
+	opacity: 0.7;
+    font-weight: bold;
+    color: green;
+}
